@@ -2,6 +2,7 @@ import { Check, Key, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { m } from "@/paraglide/messages";
 
 const tiers = [
@@ -80,11 +81,12 @@ export function Pricing() {
 					{tiers.map((tier) => (
 						<Card
 							key={tier.name}
-							className={`relative flex flex-col ${
+							className={cn(
+								"relative flex flex-col",
 								tier.highlighted
 									? "border-primary shadow-xl shadow-primary/10 scale-105"
 									: "border-border shadow-lg"
-							}`}
+							)}
 						>
 							{tier.highlighted && (
 								<Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-brand text-white border-0">
@@ -118,11 +120,10 @@ export function Pricing() {
 
 								<Button
 									variant={tier.ctaVariant}
-									className={`w-full ${
-										tier.highlighted
-											? "bg-gradient-brand hover:bg-gradient-brand-hover text-white"
-											: ""
-									}`}
+									className={cn(
+										"w-full",
+										tier.highlighted && "bg-gradient-brand hover:bg-gradient-brand-hover text-white"
+									)}
 								>
 									{tier.cta}
 								</Button>

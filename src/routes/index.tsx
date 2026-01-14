@@ -22,9 +22,7 @@ function LandingPage() {
         <Hero />
         <Problem />
         <Solution />
-        <section id="features">
-          <Features />
-        </section>
+        <Features />
         <Testimonials />
         <Pricing />
         <FAQ />
