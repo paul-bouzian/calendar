@@ -120,9 +120,8 @@ export function Footer() {
 				<Separator className="mb-8" />
 
 				{/* Copyright */}
-				<div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
+				<div className="text-center text-sm text-muted-foreground">
 					<p>{m.footer_copyright({ year: new Date().getFullYear() })}</p>
-					<p>{m.footer_made_with_love()}</p>
 				</div>
 			</div>
 		</footer>
