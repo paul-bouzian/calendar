@@ -1,102 +1,102 @@
 # SayCal - Voice-Driven Calendar App
 
-Application calendrier minimaliste avec création d'événements par la voix. Stack: TanStack Start + React 19 + Cloudflare Workers.
+Minimalist calendar application with voice-driven event creation. Stack: TanStack Start + React 19 + Cloudflare Workers.
 
-## Commandes essentielles
+## Essential Commands
 
 ```bash
-npm run dev          # Serveur dev (port 3000)
-npm run build        # Build production
+npm run dev          # Dev server (port 3000)
+npm run build        # Production build
 npm run check        # Lint + format (Biome)
-npm run test         # Tests Vitest
-npm run db:push      # Push schema vers Neon
-npm run db:studio    # Interface Drizzle Studio
+npm run test         # Vitest tests
+npm run db:push      # Push schema to Neon
+npm run db:studio    # Drizzle Studio interface
 ```
 
 ## Architecture
 
 ```
 src/
-├── routes/          # Routing fichier-based (TanStack Router)
-├── features/        # Composants par feature (landing/, etc.)
-├── components/ui/   # Composants shadcn/ui
-├── db/              # Schema Drizzle ORM
-├── paraglide/       # Runtime i18n auto-généré
-└── lib/utils.ts     # Helper cn() pour classes
-messages/            # Traductions JSON (en, fr, de)
+├── routes/          # File-based routing (TanStack Router)
+├── features/        # Feature-based components (landing/, etc.)
+├── components/ui/   # shadcn/ui components
+├── db/              # Drizzle ORM schema
+├── paraglide/       # Auto-generated i18n runtime
+└── lib/utils.ts     # cn() helper for classes
+messages/            # JSON translations (en, fr, de)
 ```
 
-## Conventions de code
+## Code Conventions
 
-### Langue
-**Tout le code doit être en anglais:**
-- Noms de variables, fonctions, classes
-- Commentaires dans le code
-- Noms de branches git (ex: `feat/voice-assistant`)
-- Messages de commit
-- Titres et descriptions de PR
-- Documentation technique
+### Language
+**All code must be in English:**
+- Variable, function, and class names
+- Code comments
+- Git branch names (e.g., `feat/voice-assistant`)
+- Commit messages
+- PR titles and descriptions
+- Technical documentation
 
 ### Imports
-Utiliser l'alias `@/` pour tous les imports internes:
+Use the `@/` alias for all internal imports:
 ```typescript
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 ```
 
 ### Styling
-Tailwind uniquement. Fusionner les classes avec `cn()`:
+Tailwind only. Merge classes with `cn()`:
 ```typescript
 className={cn("px-4 py-2", isActive && "bg-primary")}
 ```
 
 ### i18n (Paraglide)
-Importer les messages depuis le runtime généré:
+Import messages from the generated runtime:
 ```typescript
 import { m } from "@/paraglide/messages"
 <h1>{m.hero_title()}</h1>
 ```
-Les fichiers `messages/*.json` sont la source. Le runtime se régénère au `npm run dev`.
+The `messages/*.json` files are the source. The runtime regenerates on `npm run dev`.
 
-### Composants
-- Functional components uniquement
-- shadcn/ui pour les primitives UI
-- Feature-based organization dans `src/features/`
+### Components
+- Functional components only
+- shadcn/ui for UI primitives
+- Feature-based organization in `src/features/`
 
-## Base de données
+## Database
 
-Neon PostgreSQL + Drizzle ORM. Schema dans `src/db/schema.ts`.
+Neon PostgreSQL + Drizzle ORM. Schema in `src/db/schema.ts`.
 
 ```typescript
 import { getClient } from "@/db"
 const sql = await getClient()
 ```
 
-Workflow migrations:
-1. Modifier `src/db/schema.ts`
-2. `npm run db:generate` (génère migration)
-3. `npm run db:push` (applique)
+Migration workflow:
+1. Modify `src/db/schema.ts`
+2. `npm run db:generate` (generate migration)
+3. `npm run db:push` (apply)
 
-## Fichiers auto-générés (ne pas éditer)
+## Auto-generated Files (do not edit)
 
-- `src/routeTree.gen.ts` - Arbre de routes
-- `src/paraglide/*` - Runtime i18n
+- `src/routeTree.gen.ts` - Route tree
+- `src/paraglide/*` - i18n runtime
 
 ## Design System
 
-- **Primaire:** #B552D9 (violet)
-- **Secondaire:** #FA8485 (pêche)
-- **Gradient:** violet → pêche (135deg)
+- **Primary:** #B552D9 (violet)
+- **Secondary:** #FA8485 (peach)
+- **Gradient:** violet → peach (135deg)
 
-## Déploiement
+## Deployment
 
-Cloudflare Workers. Build et deploy:
+Cloudflare Workers. Build and deploy:
 ```bash
 npm run deploy
 ```
 
-## Variables d'environnement
+## Environment Variables
 
-Requises dans `.env.local`:
-- `VITE_DATABASE_URL` - URL Neon directe
-- `VITE_DATABASE_URL_POOLER` - URL Neon pooler
+Required in `.env.local`:
+- `VITE_DATABASE_URL` - Direct Neon URL
+- `VITE_DATABASE_URL_POOLER` - Neon pooler URL
