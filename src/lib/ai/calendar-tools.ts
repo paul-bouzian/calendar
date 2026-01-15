@@ -10,25 +10,25 @@ import { events } from "@/db/schema";
 export const calendarTools: FunctionDeclaration[] = [
 	{
 		name: "createEvent",
-		description: "Créer un nouvel événement dans le calendrier",
+		description: "Create a new event in the calendar",
 		parameters: {
 			type: SchemaType.OBJECT,
 			properties: {
 				title: {
 					type: SchemaType.STRING,
-					description: "Titre de l'événement",
+					description: "Event title",
 				},
 				date: {
 					type: SchemaType.STRING,
-					description: "Date au format YYYY-MM-DD",
+					description: "Date in YYYY-MM-DD format",
 				},
 				startTime: {
 					type: SchemaType.STRING,
-					description: "Heure de début au format HH:MM",
+					description: "Start time in HH:MM format",
 				},
 				endTime: {
 					type: SchemaType.STRING,
-					description: "Heure de fin au format HH:MM (optionnel, défaut +1h)",
+					description: "End time in HH:MM format (optional, defaults to +1h)",
 				},
 			},
 			required: ["title", "date", "startTime"],
@@ -36,18 +36,17 @@ export const calendarTools: FunctionDeclaration[] = [
 	},
 	{
 		name: "getEvents",
-		description:
-			"Récupérer les événements du calendrier pour une période donnée",
+		description: "Retrieve calendar events for a given period",
 		parameters: {
 			type: SchemaType.OBJECT,
 			properties: {
 				startDate: {
 					type: SchemaType.STRING,
-					description: "Date de début au format YYYY-MM-DD",
+					description: "Start date in YYYY-MM-DD format",
 				},
 				endDate: {
 					type: SchemaType.STRING,
-					description: "Date de fin au format YYYY-MM-DD",
+					description: "End date in YYYY-MM-DD format",
 				},
 			},
 			required: ["startDate", "endDate"],
@@ -55,25 +54,25 @@ export const calendarTools: FunctionDeclaration[] = [
 	},
 	{
 		name: "updateEvent",
-		description: "Modifier un événement existant",
+		description: "Update an existing event",
 		parameters: {
 			type: SchemaType.OBJECT,
 			properties: {
 				eventTitle: {
 					type: SchemaType.STRING,
-					description: "Titre de l'événement à modifier (pour le trouver)",
+					description: "Title of the event to update (used to find it)",
 				},
 				newTitle: {
 					type: SchemaType.STRING,
-					description: "Nouveau titre (optionnel)",
+					description: "New title (optional)",
 				},
 				newDate: {
 					type: SchemaType.STRING,
-					description: "Nouvelle date au format YYYY-MM-DD (optionnel)",
+					description: "New date in YYYY-MM-DD format (optional)",
 				},
 				newStartTime: {
 					type: SchemaType.STRING,
-					description: "Nouvelle heure de début au format HH:MM (optionnel)",
+					description: "New start time in HH:MM format (optional)",
 				},
 			},
 			required: ["eventTitle"],
@@ -81,13 +80,13 @@ export const calendarTools: FunctionDeclaration[] = [
 	},
 	{
 		name: "deleteEvent",
-		description: "Supprimer un événement",
+		description: "Delete an event",
 		parameters: {
 			type: SchemaType.OBJECT,
 			properties: {
 				eventTitle: {
 					type: SchemaType.STRING,
-					description: "Titre de l'événement à supprimer",
+					description: "Title of the event to delete",
 				},
 			},
 			required: ["eventTitle"],
@@ -112,7 +111,7 @@ export async function executeCalendarTool(
 			if (!title || !date || !startTime) {
 				return {
 					success: false,
-					error: `Paramètres manquants: title=${title}, date=${date}, startTime=${startTime}`,
+					error: `Missing parameters: title=${title}, date=${date}, startTime=${startTime}`,
 				};
 			}
 
@@ -125,7 +124,7 @@ export async function executeCalendarTool(
 			if (Number.isNaN(startAt.getTime())) {
 				return {
 					success: false,
-					error: `Format de date/heure invalide: date=${date}, startTime=${startTime}`,
+					error: `Invalid date/time format: date=${date}, startTime=${startTime}`,
 				};
 			}
 
@@ -160,7 +159,7 @@ export async function executeCalendarTool(
 				console.error("Database error:", dbError);
 				return {
 					success: false,
-					error: `Erreur base de données: ${dbError instanceof Error ? dbError.message : "inconnue"}`,
+					error: `Database error: ${dbError instanceof Error ? dbError.message : "unknown"}`,
 				};
 			}
 		}
@@ -213,7 +212,7 @@ export async function executeCalendarTool(
 			});
 
 			if (!event) {
-				return { success: false, error: `Événement "${eventTitle}" non trouvé` };
+				return { success: false, error: `Event "${eventTitle}" not found` };
 			}
 
 			const updates: Record<string, unknown> = { updatedAt: new Date() };
@@ -254,7 +253,7 @@ export async function executeCalendarTool(
 			});
 
 			if (!event) {
-				return { success: false, error: `Événement "${eventTitle}" non trouvé` };
+				return { success: false, error: `Event "${eventTitle}" not found` };
 			}
 
 			await db.delete(events).where(eq(events.id, event.id));
@@ -263,6 +262,6 @@ export async function executeCalendarTool(
 		}
 
 		default:
-			return { success: false, error: `Fonction inconnue: ${name}` };
+			return { success: false, error: `Unknown function: ${name}` };
 	}
 }

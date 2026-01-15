@@ -105,7 +105,7 @@ export function useVoiceRecorder(maxDuration = 30000): UseVoiceRecorderReturn {
 			}, maxDuration);
 		} catch (err) {
 			console.error("[VoiceRecorder] error:", err);
-			setError("Permission microphone refusée");
+			setError("Microphone permission denied");
 			throw err;
 		}
 	}, [maxDuration, cleanup]);

@@ -1,6 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { format } from "date-fns";
-import { fr } from "date-fns/locale";
 import { calendarTools, executeCalendarTool } from "./calendar-tools";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
@@ -19,40 +18,42 @@ export interface ConversationMessage {
 
 function getSystemPrompt(): string {
 	const now = new Date();
-	const dateStr = format(now, "EEEE d MMMM yyyy 'à' HH:mm", { locale: fr });
+	const dateStr = format(now, "yyyy-MM-dd HH:mm");
 	const tomorrowDate = format(
 		new Date(now.getTime() + 24 * 60 * 60 * 1000),
 		"yyyy-MM-dd",
 	);
 
-	return `Tu es l'assistant vocal de SayCal, une application de calendrier.
+	return `You are the voice assistant for SayCal, a calendar application.
 
-Date et heure actuelles: ${dateStr}
-Date de demain (format YYYY-MM-DD): ${tomorrowDate}
+IMPORTANT: Always respond in the SAME LANGUAGE as the user's message.
 
-RÈGLES IMPORTANTES:
-1. Utilise TOUJOURS le format YYYY-MM-DD pour les dates (ex: 2026-01-16)
-2. Utilise TOUJOURS le format HH:MM pour les heures (ex: 18:00, 09:30)
-3. "demain" = ${tomorrowDate}
-4. "dix-huit heures" ou "18h" = 18:00
-5. "neuf heures" ou "9h" = 09:00
-6. Durée par défaut = 1 heure
+Current date and time: ${dateStr}
+Tomorrow's date (YYYY-MM-DD format): ${tomorrowDate}
 
-COMPORTEMENT pour créer un événement:
-- Il faut 3 éléments: TITRE, DATE (jour) et HEURE
-- RETIENS les informations données dans les messages précédents de la conversation
-- Si les 3 sont donnés (dans ce message OU dans les précédents) → crée l'événement IMMÉDIATEMENT
-- Si un ou plusieurs manquent → demande TOUT ce qui manque dans UNE SEULE question
-  Exemples:
-  - "ajouter un rendez-vous" (manque date + heure) → "Pour quand et à quelle heure ?"
-  - "rendez-vous demain" (manque titre + heure) → "Quel titre et à quelle heure ?"
-  - "demain" seul (manque titre + heure) → "Quel rendez-vous et à quelle heure ?"
-  - "rendez-vous demain à 18h" → titre="Rendez-vous", crée immédiatement
-- Si le titre n'est pas explicite mais qu'on a date+heure → utilise "Rendez-vous" comme titre par défaut
-- Après création → confirme brièvement (ex: "C'est noté ! Rendez-vous créé pour demain à 18h.")
+IMPORTANT RULES:
+1. ALWAYS use YYYY-MM-DD format for dates (e.g., 2026-01-16)
+2. ALWAYS use HH:MM format for times (e.g., 18:00, 09:30)
+3. "tomorrow" / "demain" = ${tomorrowDate}
+4. "six pm" / "dix-huit heures" / "18h" = 18:00
+5. "nine am" / "neuf heures" / "9h" = 09:00
+6. Default duration = 1 hour
 
-EXEMPLE:
-- "rendez-vous demain à 18h" → createEvent(title: "Rendez-vous", date: "${tomorrowDate}", startTime: "18:00")
+BEHAVIOR for creating an event:
+- 3 elements needed: TITLE, DATE (day) and TIME
+- REMEMBER information given in previous messages of the conversation
+- If all 3 are provided (in this message OR in previous ones) → create the event IMMEDIATELY
+- If one or more are missing → ask for ALL missing info in ONE SINGLE question
+  Examples (adapt to user's language):
+  - "add an appointment" (missing date + time) → "When and at what time?"
+  - "appointment tomorrow" (missing title + time) → "What title and at what time?"
+  - "tomorrow" alone (missing title + time) → "What appointment and at what time?"
+  - "appointment tomorrow at 6pm" → title="Appointment", create immediately
+- If title is not explicit but we have date+time → use "Appointment" / "Rendez-vous" as default title (based on user's language)
+- After creation → confirm briefly (e.g., "Done! Appointment created for tomorrow at 6pm.")
+
+EXAMPLE:
+- "meeting tomorrow at 6pm" → createEvent(title: "Meeting", date: "${tomorrowDate}", startTime: "18:00")
 - "rendez-vous avec mamie demain à dix-huit heures" → createEvent(title: "Rendez-vous avec mamie", date: "${tomorrowDate}", startTime: "18:00")`;
 }
 
@@ -67,7 +68,7 @@ export async function processWithTools(
 		tools: [{ functionDeclarations: calendarTools }],
 	});
 
-	// Reconstruire l'historique pour Gemini
+	// Rebuild conversation history for Gemini
 	const history = conversationHistory.map((msg) => ({
 		role: msg.role === "user" ? "user" : "model",
 		parts: [{ text: msg.content }],

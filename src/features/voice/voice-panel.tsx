@@ -51,7 +51,7 @@ export function VoicePanel({ isOpen, onClose }: VoicePanelProps) {
 			await startRecording();
 			setState({ step: "recording", duration: 0 });
 		} catch {
-			setState({ step: "error", message: "Microphone non disponible" });
+			setState({ step: "error", message: "Microphone unavailable" });
 		}
 	};
 
@@ -71,7 +71,7 @@ export function VoicePanel({ isOpen, onClose }: VoicePanelProps) {
 				message: response.result,
 			});
 
-			// Mettre à jour l'historique avec le nouveau message et la réponse
+			// Update history with new message and response
 			setConversationHistory((prev) => [
 				...prev,
 				{ role: "user", content: response.transcript },
@@ -90,7 +90,7 @@ export function VoicePanel({ isOpen, onClose }: VoicePanelProps) {
 			setState({
 				step: "error",
 				message:
-					error instanceof Error ? error.message : "Erreur de traitement",
+					error instanceof Error ? error.message : "Processing error",
 			});
 		}
 	};
@@ -113,7 +113,7 @@ export function VoicePanel({ isOpen, onClose }: VoicePanelProps) {
 		}
 		setTranscript(null);
 		setState({ step: "idle" });
-		// Le useEffect va déclencher handleStartRecording automatiquement
+		// useEffect will trigger handleStartRecording automatically
 	};
 
 	if (!isOpen) return null;
@@ -131,7 +131,7 @@ export function VoicePanel({ isOpen, onClose }: VoicePanelProps) {
 					<div className="flex size-8 items-center justify-center rounded-full bg-gradient-to-br from-[#B552D9] to-[#FA8485]">
 						<Mic className="size-4 text-white" />
 					</div>
-					<span className="font-medium">Assistant vocal</span>
+					<span className="font-medium">Voice Assistant</span>
 				</div>
 				<button
 					type="button"
@@ -147,7 +147,7 @@ export function VoicePanel({ isOpen, onClose }: VoicePanelProps) {
 					<div className="flex flex-col items-center gap-4">
 						<VoiceWaveform analyserNode={analyserNode} />
 						<p className="text-sm text-muted-foreground">
-							Parlez maintenant... ({duration}s)
+							Speak now... ({duration}s)
 						</p>
 						<button
 							type="button"
@@ -163,9 +163,9 @@ export function VoicePanel({ isOpen, onClose }: VoicePanelProps) {
 					<div className="flex flex-col items-center gap-4 py-8">
 						<Loader2 className="size-8 animate-spin text-primary" />
 						<p className="text-sm text-muted-foreground">
-							{state.stage === "transcribing" && "Transcription..."}
-							{state.stage === "thinking" && "Réflexion..."}
-							{state.stage === "executing" && "Exécution..."}
+							{state.stage === "transcribing" && "Transcribing..."}
+							{state.stage === "thinking" && "Thinking..."}
+							{state.stage === "executing" && "Executing..."}
 						</p>
 					</div>
 				)}
@@ -188,14 +188,14 @@ export function VoicePanel({ isOpen, onClose }: VoicePanelProps) {
 								onClick={handleNewCommand}
 								className="flex-1 rounded-lg bg-gradient-to-br from-[#B552D9] to-[#FA8485] px-4 py-2 text-sm font-medium text-white hover:opacity-90"
 							>
-								Nouvelle commande
+								New command
 							</button>
 							<button
 								type="button"
 								onClick={handleClose}
 								className="rounded-lg border px-4 py-2 text-sm hover:bg-muted"
 							>
-								Fermer
+								Close
 							</button>
 						</div>
 					</div>
@@ -214,7 +214,7 @@ export function VoicePanel({ isOpen, onClose }: VoicePanelProps) {
 							onClick={handleNewCommand}
 							className="rounded-lg bg-primary px-4 py-2 text-sm text-white"
 						>
-							Réessayer
+							Retry
 						</button>
 					</div>
 				)}

@@ -21,31 +21,31 @@ export async function processVoiceCommand(
 ): Promise<ProcessVoiceResult> {
 	const { data: session } = await authServer.getSession();
 	if (!session?.user?.id) {
-		throw new Error("Non authentifié");
+		throw new Error("Not authenticated");
 	}
 
 	const userId = session.user.id;
 
 	const quota = await checkVoiceQuota(userId);
 	if (!quota.allowed) {
-		throw new Error("Quota vocal atteint. Passez à Premium pour continuer.");
+		throw new Error("Voice quota reached. Upgrade to Premium to continue.");
 	}
 
 	const audioFile = formData.get("audio") as File;
 	if (!audioFile) {
-		throw new Error("Fichier audio manquant");
+		throw new Error("Audio file missing");
 	}
 
 	console.log("[Voice] audio file received, size:", audioFile.size, "type:", audioFile.type);
 
 	if (audioFile.size === 0) {
-		throw new Error("Fichier audio vide");
+		throw new Error("Empty audio file");
 	}
 
 	const transcript = await transcribeAudio(audioFile);
 
 	if (!transcript || transcript.trim() === "") {
-		throw new Error("Je n'ai pas compris. Pouvez-vous répéter?");
+		throw new Error("I didn't understand. Could you repeat?");
 	}
 
 	const result = await processWithTools(transcript, userId, conversationHistory);
