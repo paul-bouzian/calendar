@@ -40,11 +40,59 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 				name: "description",
 				content: m.meta_description(),
 			},
+			{
+				name: "theme-color",
+				content: "#B552D9",
+			},
+			{
+				property: "og:title",
+				content: m.meta_title(),
+			},
+			{
+				property: "og:description",
+				content: m.meta_description(),
+			},
+			{
+				property: "og:image",
+				content: "/logo512.png",
+			},
+			{
+				property: "og:type",
+				content: "website",
+			},
+			{
+				name: "twitter:card",
+				content: "summary",
+			},
+			{
+				name: "twitter:image",
+				content: "/logo512.png",
+			},
 		],
 		links: [
 			{
 				rel: "stylesheet",
 				href: appCss,
+			},
+			{
+				rel: "icon",
+				type: "image/png",
+				sizes: "32x32",
+				href: "/favicon-32.png",
+			},
+			{
+				rel: "icon",
+				type: "image/png",
+				sizes: "48x48",
+				href: "/favicon-48.png",
+			},
+			{
+				rel: "apple-touch-icon",
+				href: "/apple-touch-icon.png",
+			},
+			{
+				rel: "manifest",
+				href: "/manifest.json",
 			},
 		],
 	}),
