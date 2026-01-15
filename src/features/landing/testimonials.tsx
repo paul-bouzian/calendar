@@ -1,44 +1,47 @@
+"use client";
+
 import { Github, MapPin, Quote, Shield } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { m } from "@/paraglide/messages";
+import { useTranslations } from "next-intl";
 
 export function Testimonials() {
+	const t = useTranslations();
 	const testimonials = [
 		{
-			quote: m.testimonial_1_quote(),
-			author: m.testimonial_1_author(),
-			role: m.testimonial_1_role(),
-			result: m.testimonial_1_result(),
+			quote: t("testimonial_1_quote"),
+			author: t("testimonial_1_author"),
+			role: t("testimonial_1_role"),
+			result: t("testimonial_1_result"),
 		},
 		{
-			quote: m.testimonial_2_quote(),
-			author: m.testimonial_2_author(),
-			role: m.testimonial_2_role(),
-			result: m.testimonial_2_result(),
+			quote: t("testimonial_2_quote"),
+			author: t("testimonial_2_author"),
+			role: t("testimonial_2_role"),
+			result: t("testimonial_2_result"),
 		},
 		{
-			quote: m.testimonial_3_quote(),
-			author: m.testimonial_3_author(),
-			role: m.testimonial_3_role(),
-			result: m.testimonial_3_result(),
+			quote: t("testimonial_3_quote"),
+			author: t("testimonial_3_author"),
+			role: t("testimonial_3_role"),
+			result: t("testimonial_3_result"),
 		},
 	];
 
 	const trustIndicators = [
 		{
 			icon: Github,
-			label: m.trust_indicator_1_label(),
-			description: m.trust_indicator_1_desc(),
+			label: t("trust_indicator_1_label"),
+			description: t("trust_indicator_1_desc"),
 		},
 		{
 			icon: MapPin,
-			label: m.trust_indicator_2_label(),
-			description: m.trust_indicator_2_desc(),
+			label: t("trust_indicator_2_label"),
+			description: t("trust_indicator_2_desc"),
 		},
 		{
 			icon: Shield,
-			label: m.trust_indicator_3_label(),
-			description: m.trust_indicator_3_desc(),
+			label: t("trust_indicator_3_label"),
+			description: t("trust_indicator_3_desc"),
 		},
 	];
 
@@ -47,11 +50,11 @@ export function Testimonials() {
 			<div className="max-w-5xl mx-auto">
 				{/* Section headline */}
 				<h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
-					{m.testimonials_title()}
+					{t("testimonials_title")}
 				</h2>
 
 				<p className="text-center text-muted-foreground mb-16 text-lg">
-					{m.testimonials_subtitle()}
+					{t("testimonials_subtitle")}
 				</p>
 
 				{/* Testimonials */}

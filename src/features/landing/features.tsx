@@ -1,27 +1,30 @@
+"use client";
+
 import { AudioWaveform, CalendarDays, Download, PenLine } from "lucide-react";
-import { m } from "@/paraglide/messages";
+import { useTranslations } from "next-intl";
 
 export function Features() {
+	const t = useTranslations();
 	const features = [
 		{
 			icon: AudioWaveform,
-			title: m.features_item_1_title(),
-			description: m.features_item_1_desc(),
+			title: t("features_item_1_title"),
+			description: t("features_item_1_desc"),
 		},
 		{
 			icon: CalendarDays,
-			title: m.features_item_2_title(),
-			description: m.features_item_2_desc(),
+			title: t("features_item_2_title"),
+			description: t("features_item_2_desc"),
 		},
 		{
 			icon: PenLine,
-			title: m.features_item_3_title(),
-			description: m.features_item_3_desc(),
+			title: t("features_item_3_title"),
+			description: t("features_item_3_desc"),
 		},
 		{
 			icon: Download,
-			title: m.features_item_4_title(),
-			description: m.features_item_4_desc(),
+			title: t("features_item_4_title"),
+			description: t("features_item_4_desc"),
 		},
 	];
 
@@ -30,11 +33,11 @@ export function Features() {
 			<div className="max-w-5xl mx-auto">
 				{/* Section headline */}
 				<h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
-					{m.features_title()}
+					{t("features_title")}
 				</h2>
 
 				<p className="text-center text-muted-foreground mb-16 max-w-2xl mx-auto text-lg">
-					{m.features_subtitle()}
+					{t("features_subtitle")}
 				</p>
 
 				{/* Features list */}

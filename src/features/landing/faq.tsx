@@ -1,44 +1,47 @@
+"use client";
+
 import {
 	Accordion,
 	AccordionContent,
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
-import { m } from "@/paraglide/messages";
+import { useTranslations } from "next-intl";
 
 export function FAQ() {
+	const t = useTranslations();
 	const faqs = [
 		{
-			question: m.faq_1_question(),
-			answer: m.faq_1_answer(),
+			question: t("faq_1_question"),
+			answer: t("faq_1_answer"),
 		},
 		{
-			question: m.faq_2_question(),
-			answer: m.faq_2_answer(),
+			question: t("faq_2_question"),
+			answer: t("faq_2_answer"),
 		},
 		{
-			question: m.faq_3_question(),
-			answer: m.faq_3_answer(),
+			question: t("faq_3_question"),
+			answer: t("faq_3_answer"),
 		},
 		{
-			question: m.faq_4_question(),
-			answer: m.faq_4_answer(),
+			question: t("faq_4_question"),
+			answer: t("faq_4_answer"),
 		},
 		{
-			question: m.faq_5_question(),
-			answer: m.faq_5_answer(),
+			question: t("faq_5_question"),
+			answer: t("faq_5_answer"),
 		},
 		{
-			question: m.faq_6_question(),
-			answer: m.faq_6_answer(),
+			question: t("faq_6_question"),
+			answer: t("faq_6_answer"),
 		},
 		{
-			question: m.faq_7_question(),
-			answer: m.faq_7_answer(),
+			question: t("faq_7_question"),
+			answer: t("faq_7_answer"),
 		},
 		{
-			question: m.faq_8_question(),
-			answer: m.faq_8_answer(),
+			question: t("faq_8_question"),
+			answer: t("faq_8_answer"),
 		},
 	];
 
@@ -47,11 +50,11 @@ export function FAQ() {
 			<div className="max-w-3xl mx-auto">
 				{/* Section headline */}
 				<h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
-					{m.faq_title()}
+					{t("faq_title")}
 				</h2>
 
 				<p className="text-center text-muted-foreground mb-12 text-lg">
-					{m.faq_subtitle()}
+					{t("faq_subtitle")}
 				</p>
 
 				{/* FAQ Accordion */}

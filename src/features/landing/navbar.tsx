@@ -1,14 +1,18 @@
+"use client";
+
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { m } from "@/paraglide/messages";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 export function Navbar() {
+	const t = useTranslations();
 	const [isOpen, setIsOpen] = useState(false);
 	const navLinks = [
-		{ label: m.link_features(), href: "#features" },
-		{ label: m.link_pricing(), href: "#pricing" },
-		{ label: m.link_faq(), href: "#faq" },
+		{ label: t("link_features"), href: "#features" },
+		{ label: t("link_pricing"), href: "#pricing" },
+		{ label: t("link_faq"), href: "#faq" },
 	];
 
 	return (
@@ -16,10 +20,10 @@ export function Navbar() {
 			<div className="max-w-6xl mx-auto px-6">
 				<div className="flex h-16 items-center justify-between">
 					{/* Logo */}
-					<a href="/" className="flex items-center gap-2">
+					<Link href="/" className="flex items-center gap-2">
 						<img src="/images/logo.png" alt="SayCal" className="h-8 w-auto" />
 						<span className="font-bold text-xl">SayCal</span>
-					</a>
+					</Link>
 
 					{/* Desktop nav */}
 					<nav className="hidden md:flex items-center gap-8">
@@ -37,14 +41,14 @@ export function Navbar() {
 					{/* Desktop CTA */}
 					<div className="hidden md:flex items-center gap-4">
 						<Button variant="ghost" size="sm" asChild>
-							<a href="/auth/sign-in">{m.nav_sign_in()}</a>
+							<Link href="/auth/sign-in">{t("nav_sign_in")}</Link>
 						</Button>
 						<Button
 							size="sm"
 							className="bg-gradient-brand hover:bg-gradient-brand-hover text-white"
 							asChild
 						>
-							<a href="/auth/sign-up">{m.nav_try_free()}</a>
+							<Link href="/auth/sign-up">{t("nav_try_free")}</Link>
 						</Button>
 					</div>
 
@@ -52,7 +56,7 @@ export function Navbar() {
 					<button
 						onClick={() => setIsOpen(!isOpen)}
 						className="md:hidden p-2 -mr-2"
-						aria-label={m.nav_toggle_menu()}
+						aria-label={t("nav_toggle_menu")}
 					>
 						{isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
 					</button>
@@ -75,13 +79,13 @@ export function Navbar() {
 						))}
 						<div className="pt-4 space-y-2">
 							<Button variant="outline" className="w-full" asChild>
-								<a href="/auth/sign-in">{m.nav_sign_in()}</a>
+								<Link href="/auth/sign-in">{t("nav_sign_in")}</Link>
 							</Button>
 							<Button
 								className="w-full bg-gradient-brand hover:bg-gradient-brand-hover text-white"
 								asChild
 							>
-								<a href="/auth/sign-up">{m.nav_try_free()}</a>
+								<Link href="/auth/sign-up">{t("nav_try_free")}</Link>
 							</Button>
 						</div>
 					</div>

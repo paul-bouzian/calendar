@@ -1,47 +1,50 @@
+"use client";
+
 import { Check, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { m } from "@/paraglide/messages";
+import { useTranslations } from "next-intl";
 
 export function Pricing() {
+	const t = useTranslations();
 	const tiers = [
 		{
-			name: m.pricing_tier_free_name(),
-			price: m.pricing_tier_free_price(),
-			period: m.pricing_tier_free_period(),
-			description: m.pricing_tier_free_description(),
+			name: t("pricing_tier_free_name"),
+			price: t("pricing_tier_free_price"),
+			period: t("pricing_tier_free_period"),
+			description: t("pricing_tier_free_description"),
 			features: [
-				m.pricing_tier_free_feature_1(),
-				m.pricing_tier_free_feature_2(),
-				m.pricing_tier_free_feature_3(),
-				m.pricing_tier_free_feature_4(),
-				m.pricing_tier_free_feature_5(),
-				m.pricing_tier_free_feature_6(),
-				m.pricing_tier_free_feature_7(),
+				t("pricing_tier_free_feature_1"),
+				t("pricing_tier_free_feature_2"),
+				t("pricing_tier_free_feature_3"),
+				t("pricing_tier_free_feature_4"),
+				t("pricing_tier_free_feature_5"),
+				t("pricing_tier_free_feature_6"),
+				t("pricing_tier_free_feature_7"),
 			],
-			cta: m.pricing_tier_free_cta(),
+			cta: t("pricing_tier_free_cta"),
 			ctaVariant: "outline" as const,
-			note: m.pricing_tier_free_note(),
+			note: t("pricing_tier_free_note"),
 			icon: null,
 			highlighted: false,
 		},
 		{
-			name: m.pricing_tier_premium_name(),
-			price: m.pricing_tier_premium_price(),
-			period: m.pricing_tier_premium_period(),
-			description: m.pricing_tier_premium_description(),
+			name: t("pricing_tier_premium_name"),
+			price: t("pricing_tier_premium_price"),
+			period: t("pricing_tier_premium_period"),
+			description: t("pricing_tier_premium_description"),
 			features: [
-				m.pricing_tier_premium_feature_1(),
-				m.pricing_tier_premium_feature_2(),
-				m.pricing_tier_premium_feature_3(),
-				m.pricing_tier_premium_feature_4(),
-				m.pricing_tier_premium_feature_5(),
+				t("pricing_tier_premium_feature_1"),
+				t("pricing_tier_premium_feature_2"),
+				t("pricing_tier_premium_feature_3"),
+				t("pricing_tier_premium_feature_4"),
+				t("pricing_tier_premium_feature_5"),
 			],
-			cta: m.pricing_tier_premium_cta(),
+			cta: t("pricing_tier_premium_cta"),
 			ctaVariant: "default" as const,
-			note: m.pricing_tier_premium_note(),
+			note: t("pricing_tier_premium_note"),
 			icon: Star,
 			highlighted: true,
 		},
@@ -52,11 +55,11 @@ export function Pricing() {
 			<div className="max-w-6xl mx-auto">
 				{/* Section headline */}
 				<h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
-					{m.pricing_title()}
+					{t("pricing_title")}
 				</h2>
 
 				<p className="text-center text-muted-foreground mb-16 text-lg">
-					{m.pricing_subtitle()}
+					{t("pricing_subtitle")}
 				</p>
 
 				{/* Pricing cards */}
@@ -73,7 +76,7 @@ export function Pricing() {
 						>
 							{tier.highlighted && (
 								<Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-brand text-white border-0">
-									{m.pricing_badge_popular()}
+									{t("pricing_badge_popular")}
 								</Badge>
 							)}
 
@@ -123,9 +126,9 @@ export function Pricing() {
 				{/* Guarantee */}
 				<div className="max-w-xl mx-auto text-center p-6 rounded-2xl bg-primary/5 border border-primary/10">
 					<p className="text-lg font-semibold mb-2">
-						{m.pricing_guarantee_title()}
+						{t("pricing_guarantee_title")}
 					</p>
-					<p className="text-muted-foreground">{m.pricing_guarantee_body()}</p>
+					<p className="text-muted-foreground">{t("pricing_guarantee_body")}</p>
 				</div>
 			</div>
 		</section>

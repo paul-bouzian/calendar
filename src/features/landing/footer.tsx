@@ -1,23 +1,26 @@
+"use client";
+
 import { Github, Twitter } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { m } from "@/paraglide/messages";
+import { useTranslations } from "next-intl";
 
 export function Footer() {
+	const t = useTranslations();
 	const footerLinks = {
 		product: [
-			{ label: m.link_features(), href: "#features" },
-			{ label: m.link_pricing(), href: "#pricing" },
-			{ label: m.link_faq(), href: "#faq" },
+			{ label: t("link_features"), href: "#features" },
+			{ label: t("link_pricing"), href: "#pricing" },
+			{ label: t("link_faq"), href: "#faq" },
 		],
 		resources: [
-			{ label: m.footer_link_docs(), href: "#" },
-			{ label: m.footer_link_github(), href: "https://github.com" },
-			{ label: m.footer_link_changelog(), href: "#" },
+			{ label: t("footer_link_docs"), href: "#" },
+			{ label: t("footer_link_github"), href: "https://github.com" },
+			{ label: t("footer_link_changelog"), href: "#" },
 		],
 		legal: [
-			{ label: m.footer_link_imprint(), href: "#" },
-			{ label: m.footer_link_privacy(), href: "#" },
-			{ label: m.footer_link_terms(), href: "#" },
+			{ label: t("footer_link_imprint"), href: "#" },
+			{ label: t("footer_link_privacy"), href: "#" },
+			{ label: t("footer_link_terms"), href: "#" },
 		],
 	};
 
@@ -25,12 +28,12 @@ export function Footer() {
 		{
 			icon: Github,
 			href: "https://github.com",
-			label: m.footer_social_github(),
+			label: t("footer_social_github"),
 		},
 		{
 			icon: Twitter,
 			href: "https://twitter.com",
-			label: m.footer_social_twitter(),
+			label: t("footer_social_twitter"),
 		},
 	];
 
@@ -46,7 +49,7 @@ export function Footer() {
 							<span className="font-bold text-xl">SayCal</span>
 						</div>
 						<p className="text-sm text-muted-foreground mb-4">
-							{m.footer_tagline()}
+							{t("footer_tagline")}
 						</p>
 						{/* Social links */}
 						<div className="flex gap-3">
@@ -67,7 +70,7 @@ export function Footer() {
 
 					{/* Product links */}
 					<div>
-						<h4 className="font-semibold mb-4">{m.footer_product_title()}</h4>
+						<h4 className="font-semibold mb-4">{t("footer_product_title")}</h4>
 						<ul className="space-y-3">
 							{footerLinks.product.map((link) => (
 								<li key={link.label}>
@@ -84,7 +87,7 @@ export function Footer() {
 
 					{/* Resources links */}
 					<div>
-						<h4 className="font-semibold mb-4">{m.footer_resources_title()}</h4>
+						<h4 className="font-semibold mb-4">{t("footer_resources_title")}</h4>
 						<ul className="space-y-3">
 							{footerLinks.resources.map((link) => (
 								<li key={link.label}>
@@ -101,7 +104,7 @@ export function Footer() {
 
 					{/* Legal links */}
 					<div>
-						<h4 className="font-semibold mb-4">{m.footer_legal_title()}</h4>
+						<h4 className="font-semibold mb-4">{t("footer_legal_title")}</h4>
 						<ul className="space-y-3">
 							{footerLinks.legal.map((link) => (
 								<li key={link.label}>
@@ -121,7 +124,7 @@ export function Footer() {
 
 				{/* Copyright */}
 				<div className="text-center text-sm text-muted-foreground">
-					<p>{m.footer_copyright({ year: new Date().getFullYear() })}</p>
+					<p>{t("footer_copyright", { year: new Date().getFullYear() })}</p>
 				</div>
 			</div>
 		</footer>

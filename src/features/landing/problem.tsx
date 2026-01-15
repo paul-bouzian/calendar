@@ -1,22 +1,25 @@
+"use client";
+
 import { Clock, MousePointerClick, Settings2 } from "lucide-react";
-import { m } from "@/paraglide/messages";
+import { useTranslations } from "next-intl";
 
 export function Problem() {
+	const t = useTranslations();
 	const painPoints = [
 		{
 			icon: Clock,
-			title: m.problem_pain_1_title(),
-			description: m.problem_pain_1_desc(),
+			title: t("problem_pain_1_title"),
+			description: t("problem_pain_1_desc"),
 		},
 		{
 			icon: MousePointerClick,
-			title: m.problem_pain_2_title(),
-			description: m.problem_pain_2_desc(),
+			title: t("problem_pain_2_title"),
+			description: t("problem_pain_2_desc"),
 		},
 		{
 			icon: Settings2,
-			title: m.problem_pain_3_title(),
-			description: m.problem_pain_3_desc(),
+			title: t("problem_pain_3_title"),
+			description: t("problem_pain_3_desc"),
 		},
 	];
 
@@ -25,11 +28,11 @@ export function Problem() {
 			<div className="max-w-5xl mx-auto">
 				{/* Section headline */}
 				<h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
-					{m.problem_title()}
+					{t("problem_title")}
 				</h2>
 
 				<p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto text-lg">
-					{m.problem_subtitle()}
+					{t("problem_subtitle")}
 				</p>
 
 				{/* Pain points */}
@@ -48,10 +51,10 @@ export function Problem() {
 				{/* Agitation */}
 				<div className="max-w-3xl mx-auto bg-background border border-border rounded-2xl p-8 text-center">
 					<p className="text-lg text-muted-foreground leading-relaxed">
-						{m.problem_agitation_line1()}
+						{t("problem_agitation_line1")}
 					</p>
 					<p className="text-lg text-foreground font-medium mt-4">
-						{m.problem_agitation_line2()}
+						{t("problem_agitation_line2")}
 					</p>
 				</div>
 			</div>

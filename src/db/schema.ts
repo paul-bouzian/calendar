@@ -34,6 +34,7 @@ export const events = pgTable(
 			.notNull()
 			.references(() => neonAuthUser.id, { onDelete: "cascade" }),
 		title: varchar("title", { length: 200 }).notNull(),
+		description: text("description"), // optional event description
 		startAt: timestamp("start_at", { withTimezone: true }).notNull(),
 		endAt: timestamp("end_at", { withTimezone: true }).notNull(),
 		color: varchar("color", { length: 7 }), // hex color, e.g. #B552D9
@@ -98,6 +99,7 @@ export type UserSubscription = typeof userSubscriptions.$inferSelect;
 // Zod schemas for validation
 export const insertEventSchema = createInsertSchema(events, {
 	title: z.string().min(1).max(200),
+	description: z.string().optional(),
 	startAt: z.coerce.date(),
 	endAt: z.coerce.date(),
 	color: z

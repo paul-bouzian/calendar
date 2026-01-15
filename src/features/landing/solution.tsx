@@ -1,28 +1,31 @@
+"use client";
+
 import { Code2, LayoutGrid, Mic, Smartphone } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { m } from "@/paraglide/messages";
+import { useTranslations } from "next-intl";
 
 export function Solution() {
+	const t = useTranslations();
 	const benefits = [
 		{
 			icon: Mic,
-			title: m.solution_benefit_1_title(),
-			description: m.solution_benefit_1_desc(),
+			title: t("solution_benefit_1_title"),
+			description: t("solution_benefit_1_desc"),
 		},
 		{
 			icon: LayoutGrid,
-			title: m.solution_benefit_2_title(),
-			description: m.solution_benefit_2_desc(),
+			title: t("solution_benefit_2_title"),
+			description: t("solution_benefit_2_desc"),
 		},
 		{
 			icon: Smartphone,
-			title: m.solution_benefit_3_title(),
-			description: m.solution_benefit_3_desc(),
+			title: t("solution_benefit_3_title"),
+			description: t("solution_benefit_3_desc"),
 		},
 		{
 			icon: Code2,
-			title: m.solution_benefit_4_title(),
-			description: m.solution_benefit_4_desc(),
+			title: t("solution_benefit_4_title"),
+			description: t("solution_benefit_4_desc"),
 		},
 	];
 
@@ -32,19 +35,19 @@ export function Solution() {
 				{/* Section headline */}
 				<div className="text-center mb-16">
 					<h2 className="text-3xl md:text-4xl font-bold mb-4">
-						{m.solution_title()}
+						{t("solution_title")}
 					</h2>
 					<p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-						{m.solution_subtitle()}
+						{t("solution_subtitle")}
 					</p>
 				</div>
 
 				{/* Value proposition highlight */}
 				<div className="text-center mb-16 p-8 rounded-3xl bg-gradient-to-br from-primary/5 to-secondary/5 border border-primary/10">
 					<p className="text-xl md:text-2xl font-medium">
-						{m.solution_highlight_prefix()}{" "}
+						{t("solution_highlight_prefix")}{" "}
 						<span className="text-gradient-brand font-bold">
-							{m.solution_highlight_emphasis()}
+							{t("solution_highlight_emphasis")}
 						</span>
 					</p>
 				</div>
