@@ -3,6 +3,7 @@ import type React from "react";
 import type { ReactNode } from "react";
 import { useDragDrop } from "@/components/calendar/contexts/dnd-context";
 import type { IEvent } from "@/components/calendar/interfaces";
+import { cn } from "@/lib/utils";
 
 interface DraggableEventProps {
 	event: IEvent;
@@ -25,7 +26,7 @@ export function DraggableEvent({
 
 	return (
 		<motion.div
-			className={`${className || ""} ${isCurrentlyDragged ? "opacity-50 cursor-grabbing" : "cursor-grab"}`}
+			className={cn(className, isCurrentlyDragged ? "opacity-50 cursor-grabbing" : "cursor-grab")}
 			draggable
 			onClick={(e: React.MouseEvent<HTMLDivElement>) => handleClick(e)}
 			onDragStart={(e) => {

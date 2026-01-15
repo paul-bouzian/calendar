@@ -4,6 +4,7 @@ import { type ReactNode, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { DateTimePicker } from "@/components/ui/date-time-picker";
 import {
 	Form,
@@ -167,7 +168,7 @@ export function AddEditEventDialog({
 											id="title"
 											placeholder="Enter a title"
 											{...field}
-											className={fieldState.invalid ? "border-red-500" : ""}
+											className={cn(fieldState.invalid && "border-red-500")}
 										/>
 									</FormControl>
 									<FormMessage />
@@ -197,9 +198,7 @@ export function AddEditEventDialog({
 									<FormControl>
 										<Select value={field.value} onValueChange={field.onChange}>
 											<SelectTrigger
-												className={`w-full ${
-													fieldState.invalid ? "border-red-500" : ""
-												}`}
+												className={cn("w-full", fieldState.invalid && "border-red-500")}
 											>
 												<SelectValue placeholder="Select a variant" />
 											</SelectTrigger>
@@ -231,7 +230,7 @@ export function AddEditEventDialog({
 										<Textarea
 											{...field}
 											placeholder="Enter a description"
-											className={fieldState.invalid ? "border-red-500" : ""}
+											className={cn(fieldState.invalid && "border-red-500")}
 										/>
 									</FormControl>
 									<FormMessage />

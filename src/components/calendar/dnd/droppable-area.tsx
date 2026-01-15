@@ -1,5 +1,6 @@
 import React, { type ReactNode } from "react";
 import { useDragDrop } from "@/components/calendar/contexts/dnd-context";
+import { cn } from "@/lib/utils";
 
 interface DroppableAreaProps {
 	date: Date;
@@ -20,7 +21,7 @@ export function DroppableArea({
 
 	return (
 		<div
-			className={`${className || ""} ${isDragging ? "drop-target" : ""}`}
+			className={cn(className, isDragging && "drop-target")}
 			onDragOver={(e) => {
 				// Prevent default to allow drop
 				e.preventDefault();

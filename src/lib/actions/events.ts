@@ -47,8 +47,8 @@ export async function getEvents(input: z.infer<typeof dateRangeSchema>) {
 	const result = await db.query.events.findMany({
 		where: and(
 			eq(events.userId, userId),
-			gte(events.startAt, startDate),
-			lte(events.endAt, endDate),
+			lte(events.startAt, endDate),
+			gte(events.endAt, startDate),
 		),
 		orderBy: (events, { asc }) => [asc(events.startAt)],
 	});

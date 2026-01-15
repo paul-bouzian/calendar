@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { useLocalStorage } from "@/components/calendar/hooks";
 import type { IEvent, IUser } from "@/components/calendar/interfaces";
 import type {
@@ -99,6 +99,23 @@ export function CalendarProvider({
 	const [allEvents, setAllEvents] = useState<IEvent[]>(events || []);
 	const [filteredEvents, setFilteredEvents] = useState<IEvent[]>(events || []);
 
+	// Track pending mutations to avoid double updates
+	const pendingMutationRef = useRef(false);
+
+	// Synchroniser l'état quand les props changent
+	/* eslint-disable react-hooks/set-state-in-effect -- Intentional sync with props */
+	useEffect(() => {
+		// Skip sync if we just did an optimistic update (mutation pending)
+		if (pendingMutationRef.current) {
+			pendingMutationRef.current = false;
+			return;
+		}
+
+		setAllEvents(events || []);
+		setFilteredEvents(events || []);
+	}, [events]);
+	/* eslint-enable react-hooks/set-state-in-effect */
+
 	const updateSettings = (newPartialSettings: Partial<CalendarSettings>) => {
 		setSettings({
 			...settings,
@@ -162,6 +179,9 @@ export function CalendarProvider({
 	};
 
 	const addEvent = async (event: IEvent) => {
+		// Mark mutation as pending to skip next sync from props
+		pendingMutationRef.current = true;
+
 		// Update local state immediately for optimistic UI
 		setAllEvents((prev) => [...prev, event]);
 		setFilteredEvents((prev) => [...prev, event]);
@@ -172,6 +192,7 @@ export function CalendarProvider({
 				await onEventCreate(event);
 			} catch (error) {
 				// Revert on error
+				pendingMutationRef.current = false;
 				setAllEvents((prev) => prev.filter((e) => e.id !== event.id));
 				setFilteredEvents((prev) => prev.filter((e) => e.id !== event.id));
 				throw error;
@@ -180,6 +201,9 @@ export function CalendarProvider({
 	};
 
 	const updateEvent = async (event: IEvent) => {
+		// Mark mutation as pending to skip next sync from props
+		pendingMutationRef.current = true;
+
 		const updated = {
 			...event,
 			startDate: new Date(event.startDate).toISOString(),
@@ -202,6 +226,7 @@ export function CalendarProvider({
 				await onEventUpdate(event);
 			} catch (error) {
 				// Revert on error
+				pendingMutationRef.current = false;
 				setAllEvents(previousAllEvents);
 				setFilteredEvents(previousFilteredEvents);
 				throw error;
@@ -210,6 +235,9 @@ export function CalendarProvider({
 	};
 
 	const removeEvent = async (eventId: number) => {
+		// Mark mutation as pending to skip next sync from props
+		pendingMutationRef.current = true;
+
 		// Store previous state for rollback
 		const previousAllEvents = allEvents;
 		const previousFilteredEvents = filteredEvents;
@@ -224,6 +252,7 @@ export function CalendarProvider({
 				await onEventDelete(eventId);
 			} catch (error) {
 				// Revert on error
+				pendingMutationRef.current = false;
 				setAllEvents(previousAllEvents);
 				setFilteredEvents(previousFilteredEvents);
 				throw error;
