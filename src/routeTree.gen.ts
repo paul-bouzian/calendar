@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
@@ -18,7 +19,8 @@ import { Route as DemoNeonRouteImport } from './routes/demo/neon'
 import { Route as DemoI18nRouteImport } from './routes/demo.i18n'
 import { Route as DemoDrizzleRouteImport } from './routes/demo/drizzle'
 import { Route as AuthPathnameRouteImport } from './routes/auth.$pathname'
-import { Route as AccountPathnameRouteImport } from './routes/account.$pathname'
+import { Route as AppSettingsRouteImport } from './routes/app/settings'
+import { Route as AppBillingRouteImport } from './routes/app/billing'
 import { Route as DemoStartServerFuncsRouteImport } from './routes/demo/start.server-funcs'
 import { Route as DemoStartApiRequestRouteImport } from './routes/demo/start.api-request'
 import { Route as DemoFormSimpleRouteImport } from './routes/demo/form.simple'
@@ -30,15 +32,20 @@ import { Route as DemoStartSsrSpaModeRouteImport } from './routes/demo/start.ssr
 import { Route as DemoStartSsrFullSsrRouteImport } from './routes/demo/start.ssr.full-ssr'
 import { Route as DemoStartSsrDataOnlyRouteImport } from './routes/demo/start.ssr.data-only'
 
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppIndexRoute = AppIndexRouteImport.update({
-  id: '/app/',
-  path: '/app/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
 } as any)
 const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
   id: '/demo/tanstack-query',
@@ -75,10 +82,15 @@ const AuthPathnameRoute = AuthPathnameRouteImport.update({
   path: '/auth/$pathname',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AccountPathnameRoute = AccountPathnameRouteImport.update({
-  id: '/account/$pathname',
-  path: '/account/$pathname',
-  getParentRoute: () => rootRouteImport,
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppBillingRoute = AppBillingRouteImport.update({
+  id: '/billing',
+  path: '/billing',
+  getParentRoute: () => AppRoute,
 } as any)
 const DemoStartServerFuncsRoute = DemoStartServerFuncsRouteImport.update({
   id: '/demo/start/server-funcs',
@@ -133,7 +145,9 @@ const DemoStartSsrDataOnlyRoute = DemoStartSsrDataOnlyRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/account/$pathname': typeof AccountPathnameRoute
+  '/app': typeof AppRouteWithChildren
+  '/app/billing': typeof AppBillingRoute
+  '/app/settings': typeof AppSettingsRoute
   '/auth/$pathname': typeof AuthPathnameRoute
   '/demo/drizzle': typeof DemoDrizzleRoute
   '/demo/i18n': typeof DemoI18nRoute
@@ -141,7 +155,7 @@ export interface FileRoutesByFullPath {
   '/demo/store': typeof DemoStoreRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
-  '/app': typeof AppIndexRoute
+  '/app/': typeof AppIndexRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
   '/demo/form/address': typeof DemoFormAddressRoute
@@ -155,7 +169,8 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/account/$pathname': typeof AccountPathnameRoute
+  '/app/billing': typeof AppBillingRoute
+  '/app/settings': typeof AppSettingsRoute
   '/auth/$pathname': typeof AuthPathnameRoute
   '/demo/drizzle': typeof DemoDrizzleRoute
   '/demo/i18n': typeof DemoI18nRoute
@@ -178,7 +193,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/account/$pathname': typeof AccountPathnameRoute
+  '/app': typeof AppRouteWithChildren
+  '/app/billing': typeof AppBillingRoute
+  '/app/settings': typeof AppSettingsRoute
   '/auth/$pathname': typeof AuthPathnameRoute
   '/demo/drizzle': typeof DemoDrizzleRoute
   '/demo/i18n': typeof DemoI18nRoute
@@ -202,7 +219,9 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/account/$pathname'
+    | '/app'
+    | '/app/billing'
+    | '/app/settings'
     | '/auth/$pathname'
     | '/demo/drizzle'
     | '/demo/i18n'
@@ -210,7 +229,7 @@ export interface FileRouteTypes {
     | '/demo/store'
     | '/demo/table'
     | '/demo/tanstack-query'
-    | '/app'
+    | '/app/'
     | '/demo/api/names'
     | '/demo/api/tq-todos'
     | '/demo/form/address'
@@ -224,7 +243,8 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/account/$pathname'
+    | '/app/billing'
+    | '/app/settings'
     | '/auth/$pathname'
     | '/demo/drizzle'
     | '/demo/i18n'
@@ -246,7 +266,9 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/account/$pathname'
+    | '/app'
+    | '/app/billing'
+    | '/app/settings'
     | '/auth/$pathname'
     | '/demo/drizzle'
     | '/demo/i18n'
@@ -269,7 +291,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AccountPathnameRoute: typeof AccountPathnameRoute
+  AppRoute: typeof AppRouteWithChildren
   AuthPathnameRoute: typeof AuthPathnameRoute
   DemoDrizzleRoute: typeof DemoDrizzleRoute
   DemoI18nRoute: typeof DemoI18nRoute
@@ -277,7 +299,6 @@ export interface RootRouteChildren {
   DemoStoreRoute: typeof DemoStoreRoute
   DemoTableRoute: typeof DemoTableRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
-  AppIndexRoute: typeof AppIndexRoute
   DemoApiNamesRoute: typeof DemoApiNamesRoute
   DemoApiTqTodosRoute: typeof DemoApiTqTodosRoute
   DemoFormAddressRoute: typeof DemoFormAddressRoute
@@ -292,6 +313,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -301,10 +329,10 @@ declare module '@tanstack/react-router' {
     }
     '/app/': {
       id: '/app/'
-      path: '/app'
-      fullPath: '/app'
+      path: '/'
+      fullPath: '/app/'
       preLoaderRoute: typeof AppIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AppRoute
     }
     '/demo/tanstack-query': {
       id: '/demo/tanstack-query'
@@ -355,12 +383,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthPathnameRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/account/$pathname': {
-      id: '/account/$pathname'
-      path: '/account/$pathname'
-      fullPath: '/account/$pathname'
-      preLoaderRoute: typeof AccountPathnameRouteImport
-      parentRoute: typeof rootRouteImport
+    '/app/settings': {
+      id: '/app/settings'
+      path: '/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/billing': {
+      id: '/app/billing'
+      path: '/billing'
+      fullPath: '/app/billing'
+      preLoaderRoute: typeof AppBillingRouteImport
+      parentRoute: typeof AppRoute
     }
     '/demo/start/server-funcs': {
       id: '/demo/start/server-funcs'
@@ -435,9 +470,23 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AppRouteChildren {
+  AppBillingRoute: typeof AppBillingRoute
+  AppSettingsRoute: typeof AppSettingsRoute
+  AppIndexRoute: typeof AppIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppBillingRoute: AppBillingRoute,
+  AppSettingsRoute: AppSettingsRoute,
+  AppIndexRoute: AppIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AccountPathnameRoute: AccountPathnameRoute,
+  AppRoute: AppRouteWithChildren,
   AuthPathnameRoute: AuthPathnameRoute,
   DemoDrizzleRoute: DemoDrizzleRoute,
   DemoI18nRoute: DemoI18nRoute,
@@ -445,7 +494,6 @@ const rootRouteChildren: RootRouteChildren = {
   DemoStoreRoute: DemoStoreRoute,
   DemoTableRoute: DemoTableRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
-  AppIndexRoute: AppIndexRoute,
   DemoApiNamesRoute: DemoApiNamesRoute,
   DemoApiTqTodosRoute: DemoApiTqTodosRoute,
   DemoFormAddressRoute: DemoFormAddressRoute,
