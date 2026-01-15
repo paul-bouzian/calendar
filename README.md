@@ -1,107 +1,181 @@
+<div align="center">
+
 # SayCal
 
-Application de calendrier moderne avec authentification et gestion d'événements.
+### 🗣️ Speak it. It's noted.
 
-## Stack technique
+A minimalist calendar with voice-powered event creation.
+Just say *"Dentist tomorrow at 2pm"* and the event is created automatically.
 
-- **Framework** : [Next.js 16](https://nextjs.org/) (App Router)
-- **Auth** : [Neon Auth](https://neon.tech/docs/guides/neon-authorize) (BetterAuth)
-- **Base de données** : [Neon PostgreSQL](https://neon.tech/) (Serverless)
-- **ORM** : [Drizzle ORM](https://orm.drizzle.team/)
-- **Data Fetching** : [TanStack Query](https://tanstack.com/query)
-- **UI** : [shadcn/ui](https://ui.shadcn.com/) + [Tailwind CSS](https://tailwindcss.com/)
-- **Animations** : [Framer Motion](https://www.framer.com/motion/)
-- **i18n** : [next-intl](https://next-intl-docs.vercel.app/) (FR/EN)
-- **Validation** : [Zod](https://zod.dev/)
-- **Package Manager** : [Bun](https://bun.sh/)
+[![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![Neon](https://img.shields.io/badge/Neon-PostgreSQL-00E5CC?style=flat-square&logo=postgresql&logoColor=white)](https://neon.tech/)
+[![TanStack Query](https://img.shields.io/badge/TanStack-Query-FF4154?style=flat-square&logo=react-query)](https://tanstack.com/query)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
-## Prérequis
+</div>
 
-- [Bun](https://bun.sh/) >= 1.0
-- Compte [Neon](https://neon.tech/) pour la base de données
+---
 
-## Installation
+## ✨ Features
+
+| Feature | Description |
+|---------|-------------|
+| 🎤 **Voice Creation** | Dictate events in natural language — done in under 5 seconds |
+| 🗓️ **Clean Interface** | Modern design with day/week/month views, no clutter |
+| 🔐 **Secure Auth** | Neon Auth (BetterAuth) with social logins |
+| 🌍 **Internationalized** | Available in English and French |
+| 📱 **Responsive** | Perfect experience on mobile and desktop |
+| 🔓 **Open Source** | Transparent code, your data stays yours |
+
+---
+
+## 🛠️ Tech Stack
+
+<table>
+<tr>
+<td align="center" width="96">
+<img src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/NextJS-Dark.svg" width="48" height="48" alt="Next.js" />
+<br><sub><b>Next.js 16</b></sub>
+</td>
+<td align="center" width="96">
+<img src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/TypeScript.svg" width="48" height="48" alt="TypeScript" />
+<br><sub><b>TypeScript</b></sub>
+</td>
+<td align="center" width="96">
+<img src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/TailwindCSS-Dark.svg" width="48" height="48" alt="Tailwind" />
+<br><sub><b>Tailwind CSS</b></sub>
+</td>
+<td align="center" width="96">
+<img src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/PostgreSQL-Dark.svg" width="48" height="48" alt="PostgreSQL" />
+<br><sub><b>Neon DB</b></sub>
+</td>
+<td align="center" width="96">
+<img src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/Bun-Dark.svg" width="48" height="48" alt="Bun" />
+<br><sub><b>Bun</b></sub>
+</td>
+</tr>
+</table>
+
+**Full stack:** Drizzle ORM • TanStack Query • shadcn/ui • Framer Motion • next-intl • Zod • Neon Auth
+
+---
+
+## 🚀 Quick Start
 
 ```bash
-# Cloner le repo
+# Clone the repository
 git clone https://github.com/paul-bouzian/saycal.git
 cd saycal
 
-# Installer les dépendances
+# Install dependencies
 bun install
+
+# Set up environment variables
+cp .env.example .env.local
+
+# Start development server
+bun run dev
 ```
 
-## Configuration
+Open [http://localhost:3000](http://localhost:3000) to see the app.
 
-Créer un fichier `.env.local` à la racine :
+---
+
+## 📋 Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `bun run dev` | Start dev server on port 3000 |
+| `bun run build` | Build for production |
+| `bun run start` | Run production build |
+| `bun run check` | Run Biome linter & formatter |
+| `bun run db:generate` | Generate Drizzle migration |
+| `bun run db:migrate` | Apply migrations to database |
+| `bun run db:studio` | Open Drizzle Studio |
+
+---
+
+## 📁 Project Structure
+
+```
+src/
+├── app/                    # App Router (pages)
+│   └── [locale]/           # Internationalized routes
+├── components/
+│   ├── calendar/           # Calendar components
+│   └── ui/                 # shadcn/ui components
+├── db/                     # Drizzle ORM schema & connection
+├── features/               # Feature modules (landing, dashboard)
+├── i18n/                   # next-intl configuration
+├── lib/                    # Utilities & server actions
+└── messages/               # Translations (fr.json, en.json)
+```
+
+---
+
+## 🎨 Design System
+
+<table>
+<tr>
+<td align="center">
+<img src="https://via.placeholder.com/80/B552D9/FFFFFF?text=+" alt="Primary" />
+<br><code>#B552D9</code>
+<br><sub>Primary</sub>
+</td>
+<td align="center">
+<img src="https://via.placeholder.com/80/FA8485/FFFFFF?text=+" alt="Secondary" />
+<br><code>#FA8485</code>
+<br><sub>Secondary</sub>
+</td>
+<td align="center">
+<img src="https://via.placeholder.com/160x80/B552D9/FA8485?text=Gradient" alt="Gradient" />
+<br><code>135deg</code>
+<br><sub>Brand Gradient</sub>
+</td>
+</tr>
+</table>
+
+---
+
+## 🔐 Environment Variables
+
+Create a `.env.local` file with the following variables:
 
 ```env
 # Database (Neon)
 DATABASE_URL=postgresql://...
 
 # Auth (Neon Auth)
-# URL de votre instance Neon Auth (depuis le dashboard Neon)
 NEXT_PUBLIC_NEON_AUTH_URL=https://your-project.auth.neon.tech
 NEON_AUTH_BASE_URL=https://your-project.auth.neon.tech
+
+# AI Services (for voice features)
+DEEPGRAM_API_KEY=your_deepgram_key
+GEMINI_API_KEY=your_gemini_key
 ```
 
-## Base de données
+---
 
-```bash
-# Générer les migrations
-bun run db:generate
+## 🤝 Contributing
 
-# Appliquer les migrations
-bun run db:migrate
+Contributions are welcome! Here's how you can help:
 
-# Ouvrir Drizzle Studio
-bun run db:studio
-```
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. **Commit** your changes (`git commit -m 'feat: add amazing feature'`)
+4. **Push** to the branch (`git push origin feature/amazing-feature`)
+5. **Open** a Pull Request
 
-## Développement
+---
 
-```bash
-# Lancer le serveur de développement
-bun run dev
-```
+## 📄 License
 
-Ouvrir [http://localhost:3000](http://localhost:3000).
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
 
-## Build
+---
 
-```bash
-# Build de production
-bun run build
+<div align="center">
 
-# Lancer en production
-bun run start
-```
+Made with ❤️ by [Paul Bouzian](https://github.com/paul-bouzian)
 
-## Structure du projet
-
-```
-src/
-├── app/                    # App Router (pages)
-│   └── [locale]/          # Routes internationalisées
-├── components/
-│   ├── calendar/          # Composants calendrier
-│   └── ui/                # Composants shadcn/ui
-├── db/                    # Schema Drizzle & connexion
-├── features/              # Features (landing, dashboard)
-├── i18n/                  # Configuration next-intl
-├── lib/                   # Utilitaires & actions serveur
-└── messages/              # Traductions (fr.json, en.json)
-```
-
-## Déploiement
-
-Le projet est optimisé pour [Vercel](https://vercel.com/).
-
-```bash
-# Déployer via Vercel CLI
-vercel
-```
-
-## Licence
-
-MIT
+</div>
