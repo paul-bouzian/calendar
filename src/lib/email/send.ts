@@ -1,7 +1,7 @@
-import { resend, EMAIL_FROM } from "./client";
-import { MagicLinkEmail } from "./templates/magic-link";
-import { WelcomeEmail } from "./templates/welcome";
-import { PaymentFailedEmail } from "./templates/payment-failed";
+import { resend, EMAIL_FROM } from "@/lib/email/client";
+import { MagicLinkEmail } from "@/lib/email/templates/magic-link";
+import { WelcomeEmail } from "@/lib/email/templates/welcome";
+import { PaymentFailedEmail } from "@/lib/email/templates/payment-failed";
 
 export async function sendMagicLink(to: string, magicLink: string) {
 	const { error } = await resend.emails.send({

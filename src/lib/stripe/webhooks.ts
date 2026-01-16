@@ -2,7 +2,7 @@ import { eq } from "drizzle-orm";
 import type Stripe from "stripe";
 import { db } from "@/db/index";
 import { userSubscriptions } from "@/db/schema";
-import { getStripe } from "./client";
+import { getStripe } from "@/lib/stripe/client";
 import { sendPaymentFailedEmail } from "@/lib/email/send";
 
 export async function handleCheckoutCompleted(
@@ -62,7 +62,15 @@ export async function handleSubscriptionDeleted(
 }
 
 export async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
-	const customerId = invoice.customer as string;
+	const customerId =
+		typeof invoice.customer === "string"
+			? invoice.customer
+			: invoice.customer?.id;
+
+	if (!customerId) {
+		console.error("[Stripe] No customer ID found in invoice");
+		return;
+	}
 
 	try {
 		const customer = await getStripe().customers.retrieve(customerId);
