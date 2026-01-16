@@ -29,6 +29,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 					disableTransitionOnChange
 				>
 					<NeonAuthUIProvider
+						// @ts-expect-error - Type conflict between @better-fetch/fetch versions (npm vs bun)
 						authClient={authClient}
 						emailOTP
 						redirectTo="/app"
