@@ -23,7 +23,22 @@ export function VoiceUsageCard({
 	isUnlimited,
 }: VoiceUsageCardProps) {
 	const t = useTranslations();
-	const percentage = isUnlimited ? 0 : Math.min(100, (count / limit) * 100);
+
+	if (isUnlimited) {
+		return (
+			<Card>
+				<CardHeader>
+					<CardTitle className="flex items-center gap-2">
+						<Mic className="size-5" />
+						{t("billing_voice_usage")}
+					</CardTitle>
+					<CardDescription>{t("billing_unlimited_usage")}</CardDescription>
+				</CardHeader>
+			</Card>
+		);
+	}
+
+	const percentage = Math.min(100, (count / limit) * 100);
 
 	return (
 		<Card>
@@ -32,23 +47,12 @@ export function VoiceUsageCard({
 					<Mic className="size-5" />
 					{t("billing_voice_usage")}
 				</CardTitle>
-				{isUnlimited && (
-					<CardDescription>{t("billing_unlimited_usage")}</CardDescription>
-				)}
 			</CardHeader>
 			<CardContent className="space-y-4">
-				{isUnlimited ? (
-					<p className="text-sm text-muted-foreground">
-						{t("billing_unlimited_usage")}
-					</p>
-				) : (
-					<>
-						<Progress value={percentage} className="h-2" />
-						<p className="text-sm text-muted-foreground">
-							{t("billing_usage_count", { used: count, total: limit })}
-						</p>
-					</>
-				)}
+				<Progress value={percentage} className="h-2" />
+				<p className="text-sm text-muted-foreground">
+					{t("billing_usage_count", { used: count, total: limit })}
+				</p>
 			</CardContent>
 		</Card>
 	);

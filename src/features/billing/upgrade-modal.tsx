@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Check, Loader2, Sparkles } from "lucide-react";
 import {
 	Dialog,
@@ -10,6 +9,7 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { useStripeRedirect } from "@/hooks/use-stripe-redirect";
 import { useTranslations } from "next-intl";
 
 interface UpgradeModalProps {
@@ -19,6 +19,12 @@ interface UpgradeModalProps {
 	usageLimit: number;
 }
 
+const FEATURES = [
+	"upgrade_feature_unlimited_voice",
+	"upgrade_feature_priority_support",
+	"upgrade_feature_early_access",
+] as const;
+
 export function UpgradeModal({
 	isOpen,
 	onClose,
@@ -26,22 +32,7 @@ export function UpgradeModal({
 	usageLimit,
 }: UpgradeModalProps) {
 	const t = useTranslations();
-	const [isLoading, setIsLoading] = useState(false);
-
-	const handleUpgrade = async () => {
-		setIsLoading(true);
-		try {
-			const response = await fetch("/api/stripe/checkout", { method: "POST" });
-			const data = await response.json();
-			if (data.url) {
-				window.location.href = data.url;
-			}
-		} catch (error) {
-			console.error("[Upgrade]", error);
-		} finally {
-			setIsLoading(false);
-		}
-	};
+	const { redirect, isLoading } = useStripeRedirect("/api/stripe/checkout");
 
 	return (
 		<Dialog open={isOpen} onOpenChange={onClose}>
@@ -62,23 +53,17 @@ export function UpgradeModal({
 				</DialogHeader>
 
 				<div className="space-y-3 py-4">
-					<div className="flex items-center gap-2 text-sm">
-						<Check className="size-4 text-primary" />
-						<span>{t("upgrade_feature_unlimited_voice")}</span>
-					</div>
-					<div className="flex items-center gap-2 text-sm">
-						<Check className="size-4 text-primary" />
-						<span>{t("upgrade_feature_priority_support")}</span>
-					</div>
-					<div className="flex items-center gap-2 text-sm">
-						<Check className="size-4 text-primary" />
-						<span>{t("upgrade_feature_early_access")}</span>
-					</div>
+					{FEATURES.map((feature) => (
+						<div key={feature} className="flex items-center gap-2 text-sm">
+							<Check className="size-4 text-primary" />
+							<span>{t(feature)}</span>
+						</div>
+					))}
 				</div>
 
 				<div className="flex flex-col gap-2">
 					<Button
-						onClick={handleUpgrade}
+						onClick={redirect}
 						disabled={isLoading}
 						className="w-full bg-gradient-to-r from-[#B552D9] to-[#FA8485] hover:opacity-90"
 					>

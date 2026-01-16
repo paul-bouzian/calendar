@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { ExternalLink, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,26 +9,12 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { useStripeRedirect } from "@/hooks/use-stripe-redirect";
 import { useTranslations } from "next-intl";
 
 export function ManageSubscription() {
 	const t = useTranslations();
-	const [isLoading, setIsLoading] = useState(false);
-
-	const handleManage = async () => {
-		setIsLoading(true);
-		try {
-			const response = await fetch("/api/stripe/portal", { method: "POST" });
-			const data = await response.json();
-			if (data.url) {
-				window.location.href = data.url;
-			}
-		} catch (error) {
-			console.error("[Portal]", error);
-		} finally {
-			setIsLoading(false);
-		}
-	};
+	const { redirect, isLoading } = useStripeRedirect("/api/stripe/portal");
 
 	return (
 		<Card>
@@ -40,7 +25,7 @@ export function ManageSubscription() {
 			<CardContent>
 				<Button
 					variant="outline"
-					onClick={handleManage}
+					onClick={redirect}
 					disabled={isLoading}
 					className="w-full"
 				>
