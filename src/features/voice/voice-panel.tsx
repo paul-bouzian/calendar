@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { useVoiceRecorder } from "@/hooks/use-voice-recorder";
 import { VoiceWaveform } from "./voice-waveform";
 import { VoiceMessage } from "./voice-message";
+import { UpgradeModal } from "@/features/billing/upgrade-modal";
 import { processVoiceCommand } from "@/lib/actions/voice";
 import type { VoiceResponse, ConversationMessage } from "@/lib/ai/gemini";
 
@@ -26,6 +27,7 @@ export function VoicePanel({ isOpen, onClose }: VoicePanelProps) {
 	const [state, setState] = useState<PanelState>({ step: "idle" });
 	const [transcript, setTranscript] = useState<string | null>(null);
 	const [conversationHistory, setConversationHistory] = useState<ConversationMessage[]>([]);
+	const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 	const autoCloseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
 	const queryClient = useQueryClient();
@@ -97,11 +99,18 @@ export function VoicePanel({ isOpen, onClose }: VoicePanelProps) {
 				}, 1500);
 			}
 		} catch (error) {
-			setState({
-				step: "error",
-				message:
-					error instanceof Error ? error.message : "Processing error",
-			});
+			const errorMessage =
+				error instanceof Error ? error.message : "Processing error";
+
+			if (errorMessage.includes("Voice quota reached")) {
+				setShowUpgradeModal(true);
+				setState({ step: "idle" });
+			} else {
+				setState({
+					step: "error",
+					message: errorMessage,
+				});
+			}
 		}
 	};
 
@@ -222,6 +231,16 @@ export function VoicePanel({ isOpen, onClose }: VoicePanelProps) {
 					</div>
 				)}
 			</div>
+
+			<UpgradeModal
+				isOpen={showUpgradeModal}
+				onClose={() => {
+					setShowUpgradeModal(false);
+					handleClose();
+				}}
+				usageCount={100}
+				usageLimit={100}
+			/>
 		</div>
 	);
 }
