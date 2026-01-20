@@ -94,6 +94,16 @@ Neon Auth (BetterAuth) with email OTP authentication.
 - Client: `src/lib/auth.ts`
 - Server: `src/lib/auth-server.ts`
 
+### Critical Warning: NeonAuthUIProvider ts-expect-error
+**NEVER remove the `@ts-expect-error` comment in `src/components/providers.tsx` on the `authClient` prop.**
+
+This comment is required because:
+- Vercel deploys with **npm** which creates duplicate `@better-fetch/fetch` packages
+- Bun deduplicates dependencies, so local builds work without it
+- Removing it breaks production deployments on Vercel
+
+The comment must stay even if local `bun run build` passes without it.
+
 ## AI Services
 
 Voice features powered by:

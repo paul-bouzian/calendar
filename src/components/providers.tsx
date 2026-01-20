@@ -29,7 +29,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 					disableTransitionOnChange
 				>
 					<NeonAuthUIProvider
-						// @ts-expect-error - Type mismatch due to @better-fetch/fetch duplication in node_modules (npm vs bun resolution)
+						// @ts-expect-error - NEVER REMOVE: Required for Vercel/npm builds. Bun deduplicates @better-fetch/fetch but npm creates duplicates with incompatible types. Removing this breaks production deployments.
 						authClient={authClient}
 						emailOTP
 						redirectTo="/app"
