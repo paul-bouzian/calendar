@@ -6,6 +6,7 @@ interface UseVoiceRecorderReturn {
 	isRecording: boolean;
 	duration: number;
 	analyserNode: AnalyserNode | null;
+	mediaRecorder: MediaRecorder | null;
 	startRecording: () => Promise<void>;
 	stopRecording: () => Promise<Blob>;
 	error: string | null;
@@ -15,6 +16,7 @@ export function useVoiceRecorder(maxDuration = 30000): UseVoiceRecorderReturn {
 	const [isRecording, setIsRecording] = useState(false);
 	const [duration, setDuration] = useState(0);
 	const [analyserNode, setAnalyserNode] = useState<AnalyserNode | null>(null);
+	const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
 	const [error, setError] = useState<string | null>(null);
 
 	const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -34,6 +36,7 @@ export function useVoiceRecorder(maxDuration = 30000): UseVoiceRecorderReturn {
 			mediaRecorderRef.current.stop();
 		}
 		mediaRecorderRef.current = null;
+		setMediaRecorder(null);
 		if (streamRef.current) {
 			streamRef.current.getTracks().forEach((track) => track.stop());
 			streamRef.current = null;
@@ -86,6 +89,7 @@ export function useVoiceRecorder(maxDuration = 30000): UseVoiceRecorderReturn {
 
 			recorder.start(100);
 			mediaRecorderRef.current = recorder;
+			setMediaRecorder(recorder);
 			setIsRecording(true);
 			console.log("[VoiceRecorder] recording started");
 
@@ -143,6 +147,7 @@ export function useVoiceRecorder(maxDuration = 30000): UseVoiceRecorderReturn {
 		isRecording,
 		duration,
 		analyserNode,
+		mediaRecorder,
 		startRecording,
 		stopRecording,
 		error,
